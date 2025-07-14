@@ -47,7 +47,7 @@ const handlePageChange = (newPage: number) => {
 <template>
   <div>
     <Header :search-title="search" @search="handleSearch"/>
-    <SearchInfo :search="search" :count="total" :is-pending="isPending"/>
+    <SearchInfo v-if="search" :search="search" :count="total" :is-pending="isPending"/>
     <Content :media-items="items" :is-pending="isPending" :error-message="errorMessage"/>
     <Pagination v-if="total > 10" :current-page="page" :total="total" @page-change="handlePageChange"/>
   </div>

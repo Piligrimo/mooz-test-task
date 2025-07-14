@@ -28,6 +28,7 @@
     <div v-else-if="mediaItems?.length === 0">
       <NotFound :error-message="errorMessage"/>
     </div>
+    <h2 v-else class="search-hint">Use the search field in the header to fetch the media</h2>
   </div>
 </template>
 
@@ -37,5 +38,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 50px
+}
+.search-hint {
+  margin-top: 160px;
+  text-align: center;
 }
 </style>

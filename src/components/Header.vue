@@ -36,8 +36,11 @@
  background-color: #FCFCFF;
  height: 40px;
  width: 280px;
- padding: 10px 15px;
+ padding: 10px 40px 10px 15px;
  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+ background-image: url("../assets/search.svg");
+ background-repeat: no-repeat;
+ background-position: right 12px center;
 }
 
 .header__logo {

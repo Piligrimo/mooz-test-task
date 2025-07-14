@@ -6,13 +6,10 @@
 
 <template>
   <section class="search-info">
-    <p v-if="!search || !count" class="search-info__text">Use search field in header</p>
-    <template v-else>
-      <p class="search-info__text">You searched for: <u>{{ search }}</u></p>
-      <div v-if="!isPending" class="search-info__badge">
-        {{ count }} results
-      </div>
-    </template>
+    <p class="search-info__text">You searched for: <u>{{ search }}</u></p>
+    <div v-if="!isPending && count" class="search-info__badge">
+      {{ count }} results
+    </div>
   </section>
 </template>
 
