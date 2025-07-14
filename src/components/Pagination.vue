@@ -2,6 +2,9 @@
 import { computed } from 'vue';
 
   const props = defineProps<{ currentPage: number, total: number}>()
+  const emit = defineEmits<{
+    (e: 'page-change', value: number): void
+  }>()
 
   const ITEMS_PER_PAGE = 10;
   const PAGER_COUNT = 5;
@@ -14,32 +17,87 @@ import { computed } from 'vue';
 
   const isActive = (n: number) => n === props.currentPage 
 
+  const handleEllipsisClick = (side: 'left' | 'right') => {
+    if (side === 'left') {
+      pageChange(Math.max(1, props.currentPage - HALF_PAGER_COUNT))
+    } else {
+      pageChange(Math.min(props.currentPage + HALF_PAGER_COUNT, pagesCount.value))
+    }
+  }
+
+  const handlePrevPageClick = () => {
+    if (!isActive(1))
+      pageChange(props.currentPage - 1)
+  }
+  const handleNextPageClick = () => {
+    if (!isActive(pagesCount.value))
+      pageChange(props.currentPage + 1)
+  }
+
+  const pageChange = (pageNumber: number) => {
+    emit('page-change', pageNumber)
+  }
+
 </script>
 
 <template>
   <div class="pagination">
-    <div class="pagination__button">
-      <svg class="pagination__arrow" :class="{_disabled: isActive(1)}">
+    <div 
+      class="pagination__button"
+      :class="{_disabled: isActive(1)}"
+      @click="handlePrevPageClick"
+    >
+      <svg class="pagination__arrow">
         <use href="../assets/arrow-left.svg"></use>
       </svg>
     </div>
-    <div class="pagination__button" :class="{'_is-active':isActive(1)}">1</div>
-    <div v-if="intervalStart > 1" class="pagination__button">...</div>
+    <div
+      class="pagination__button" 
+      :class="{'_is-active':isActive(1)}"
+      @click="pageChange(1)"
+    >
+      1
+    </div>
+    <div
+      v-if="intervalStart > 1" 
+      class="pagination__button"
+      @click="handleEllipsisClick('left')"
+    >
+      ...
+    </div>
     <template v-if="intervalEnd - intervalStart > 0">
       <div 
           v-for="n in intervalEnd - intervalStart" 
           class="pagination__button"
           :class="{'_is-active': isActive(n+intervalStart)}"
           :key="n+intervalStart"
+          @click="pageChange(n + intervalStart)"
       >
-        {{ n+intervalStart }}
+        {{ n + intervalStart }}
       </div>
     </template>
   
-    <div v-if="intervalEnd < pagesCount-1" class="pagination__button">...</div>
-    <div v-if="intervalEnd > 0" class="pagination__button" :class="{'_is-active': isActive(pagesCount)}">{{ pagesCount }}</div>
-    <div class="pagination__button">
-      <svg class="pagination__arrow" :class="{_disabled: isActive(pagesCount)}">
+    <div 
+      v-if="intervalEnd < pagesCount-1"
+      class="pagination__button"
+      @click="handleEllipsisClick('right')"
+    >
+      ...
+    </div>
+    <div 
+      v-if="intervalEnd > 0"
+      class="pagination__button" 
+      :class="{'_is-active': isActive(pagesCount)}"
+      @click="pageChange(pagesCount)"
+    > 
+      {{ pagesCount }}
+    </div>
+    <div 
+      class="pagination__button" 
+      :class="{_disabled: isActive(pagesCount)}"
+      @click="handleNextPageClick"
+    >
+      <svg class="pagination__arrow">
         <use href="../assets/arrow-right.svg"></use>
       </svg>
     </div>
@@ -59,6 +117,7 @@ import { computed } from 'vue';
   padding: 5px 12px;
   border: 1px solid #E6EAF5;
   margin-right: -1px;
+  cursor: pointer;
 }
 
 .pagination__button._is-active {
@@ -78,7 +137,11 @@ import { computed } from 'vue';
   width: 12px;
   height: 12px;
 }
-.pagination__arrow._disabled {
+
+.pagination__button._disabled{
+   cursor: default;
+}
+.pagination__button._disabled .pagination__arrow{
   color: #929BBC;
 }
 </style>

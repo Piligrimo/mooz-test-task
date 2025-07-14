@@ -2,7 +2,13 @@
   import Card from './Card.vue'
   import type { MediaItem } from '../../utils/types';
   import Loading from './Loading.vue';
-  defineProps<{ mediaItems: MediaItem[] | null, isPending: boolean}>()
+  import NotFound from './NotFound.vue';
+
+  defineProps<{
+    mediaItems: MediaItem[] | null,
+    isPending: boolean,
+    errorMessage: string
+  }>()
 </script>
 
 <template>
@@ -20,7 +26,7 @@
       />    
     </main>
     <div v-else-if="mediaItems?.length === 0">
-      <h1>Nothing found</h1>
+      <NotFound :error-message="errorMessage"/>
     </div>
   </div>
 </template>

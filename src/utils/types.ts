@@ -9,7 +9,7 @@ export interface MediaItem {
 
 
 export interface MediaItemsResponse {
-    Response: 'string'
+    Error?: string
     Search: MediaItem[]
     totalResults: number
 }

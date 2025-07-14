@@ -10,8 +10,16 @@ export const getMediaItems = async (search: string, page: number) : Promise<Medi
     params.append("s", search);
     params.append("page", page.toString());
     
-    const res = await fetch(URL+params)
-    const data = await res.json()
-
-    return data as unknown as MediaItemsResponse
+    try {
+        const res = await fetch(URL+params)
+        const data = await res.json()
+        return data as unknown as MediaItemsResponse
+    } catch {
+        return {
+            Error: 'Error Accured',
+            Search: [],
+            totalResults: 0
+        }
+    }
+    
 }

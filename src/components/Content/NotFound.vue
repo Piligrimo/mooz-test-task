@@ -1,23 +1,27 @@
 <script setup lang="ts">
+  defineProps<{ errorMessage: string }>()
 </script>
 
 <template>
-  <div class="loading">
-    <svg class="loading__spinner">
-        <use href="../../assets/loading.svg"></use>
-    </svg>
+  <div class="not-found">
+    <img class="not-found__icon" src="../../assets/not-found.svg" />
+    <h2>{{ errorMessage }}</h2>
   </div>
 </template>
 
 <style scoped>
-.loading {
+.not-found {
     width: 100%;
     height: 50dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.loading__spinner {
-    color: #3256E3;
+.not-found__icon {
     height: 100px;
     width: 100px;
 }
+
 </style>

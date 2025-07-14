@@ -13,13 +13,21 @@ const items = ref<MediaItem[] | null>(null)
 const total = ref(0)
 const page = ref(1)
 const isPending = ref(false)
+const errorMessage = ref('')
 
 const debouncedGetMediaItems = debounce(async (searchTitle) => {
   page.value = 1
   isPending.value = true
   const data = await getMediaItems(searchTitle, 1)
   isPending.value = false
-  items.value = data.Search || []
+
+  if (data.Error) {
+    errorMessage.value = data.Error
+    items.value = []
+    total.value = 0
+    return
+  }
+  items.value = data.Search
   total.value = data.totalResults
 }, 300)
 
@@ -35,7 +43,7 @@ const handleSearch = (searchTitle: string) => {
   <div>
     <Header :search-title="search" @search="handleSearch"/>
     <SearchInfo :search="search" :count="total" :is-pending="isPending"/>
-    <Content :media-items="items" :is-pending="isPending"/>
+    <Content :media-items="items" :is-pending="isPending" :error-message="errorMessage"/>
     <Pagination v-if="total > 10" :current-page="page" :total="total"/>
   </div>
 </template>
