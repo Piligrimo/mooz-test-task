@@ -6,11 +6,12 @@ import { computed } from 'vue';
     (e: 'page-change', value: number): void
   }>()
 
-  const ITEMS_PER_PAGE = 10;
-  const PAGER_COUNT = 5;
+  const ITEMS_PER_PAGE = 10
+  const PAGER_COUNT = 5
   const HALF_PAGER_COUNT = Math.floor(PAGER_COUNT / 2)
+  const ELLIPSIS_DEPTH = 2
 
-  const pagesCount = computed(() => Math.floor(props.total / ITEMS_PER_PAGE))
+  const pagesCount = computed(() => Math.floor(props.total / ITEMS_PER_PAGE) + 1)
 
   const intervalStart = computed(() => Math.max(props.currentPage - HALF_PAGER_COUNT - 1, 1))
   const intervalEnd = computed(() => Math.min(props.currentPage + HALF_PAGER_COUNT, pagesCount.value-1))
@@ -19,9 +20,9 @@ import { computed } from 'vue';
 
   const handleEllipsisClick = (side: 'left' | 'right') => {
     if (side === 'left') {
-      pageChange(Math.max(1, props.currentPage - HALF_PAGER_COUNT))
+      pageChange(Math.max(1, props.currentPage - HALF_PAGER_COUNT - ELLIPSIS_DEPTH))
     } else {
-      pageChange(Math.min(props.currentPage + HALF_PAGER_COUNT, pagesCount.value))
+      pageChange(Math.min(props.currentPage + HALF_PAGER_COUNT + ELLIPSIS_DEPTH, pagesCount.value))
     }
   }
 

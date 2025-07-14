@@ -15,10 +15,9 @@ const page = ref(1)
 const isPending = ref(false)
 const errorMessage = ref('')
 
-const debouncedGetMediaItems = debounce(async (searchTitle) => {
-  page.value = 1
+const debouncedGetMediaItems = debounce(async () => {
   isPending.value = true
-  const data = await getMediaItems(searchTitle, 1)
+  const data = await getMediaItems(search.value, page.value)
   isPending.value = false
 
   if (data.Error) {
@@ -34,7 +33,13 @@ const debouncedGetMediaItems = debounce(async (searchTitle) => {
 const handleSearch = (searchTitle: string) => {
   search.value = searchTitle
   if (!searchTitle) return
-  debouncedGetMediaItems(searchTitle)
+  page.value = 1
+  debouncedGetMediaItems()
+}
+
+const handlePageChange = (newPage: number) => {
+  page.value = newPage
+  debouncedGetMediaItems()
 }
 
 </script>
@@ -44,7 +49,7 @@ const handleSearch = (searchTitle: string) => {
     <Header :search-title="search" @search="handleSearch"/>
     <SearchInfo :search="search" :count="total" :is-pending="isPending"/>
     <Content :media-items="items" :is-pending="isPending" :error-message="errorMessage"/>
-    <Pagination v-if="total > 10" :current-page="page" :total="total"/>
+    <Pagination v-if="total > 10" :current-page="page" :total="total" @page-change="handlePageChange"/>
   </div>
 </template>
 
