@@ -1,12 +1,18 @@
 <script setup lang="ts">
   import { type MediaItem } from '../../utils/types.ts'
+  import placeholder from '../../assets/placeholder.png'
   defineProps<MediaItem>()
+
+  const handleImageError = (event: Event) => {
+    const target = event.target as HTMLInputElement
+    target.src = placeholder
+  }
 </script>
 
 <template>
   <div class="card">
     <div class="card__image-container">
-     <img class="card__poster" :src="Poster"/>
+     <img class="card__poster" :src="Poster" @error="handleImageError"/>
     </div>
     <div class="card__info">
       <p class="card__text">Name: {{Title}}</p>
