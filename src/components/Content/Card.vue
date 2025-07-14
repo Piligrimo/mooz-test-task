@@ -5,7 +5,9 @@
 
 <template>
   <div class="card">
-    <img class="card__poster" :src="Poster"/>
+    <div class="card__image-container">
+     <img class="card__poster" :src="Poster"/>
+    </div>
     <div class="card__info">
       <p class="card__text">Name: {{Title}}</p>
       <p class="card__text">Year: {{Year}}</p>
@@ -25,12 +27,17 @@
   padding: 0 15px
 }
 
-.card__poster {
+.card__image-container {
   height: 270px;
   width: 245px;
   border-radius: 10px;
   border: 1px solid #3256E3;
   display: block;
+  overflow: hidden;
+}
+
+.card__poster {
+  width: 100%;
 }
 
 .card__text {

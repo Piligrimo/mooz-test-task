@@ -3,14 +3,40 @@ import Header from './components/Header.vue';
 import SearchInfo from './components/SearchInfo.vue';
 import Content from './components/Content/index.vue';
 import Pagination from './components/Pagination.vue';
+import { getMediaItems } from './api';
+import { debounce } from 'lodash';
+import { ref } from 'vue';
+import { type MediaItem } from './utils/types';
+
+const search = ref('')
+const items = ref<MediaItem[] | null>(null)
+const total = ref(0)
+const page = ref(1)
+const isPending = ref(false)
+
+const debouncedGetMediaItems = debounce(async (searchTitle) => {
+  page.value = 1
+  isPending.value = true
+  const data = await getMediaItems(searchTitle, 1)
+  isPending.value = false
+  items.value = data.Search || []
+  total.value = data.totalResults
+}, 300)
+
+const handleSearch = (searchTitle: string) => {
+  search.value = searchTitle
+  if (!searchTitle) return
+  debouncedGetMediaItems(searchTitle)
+}
+
 </script>
 
 <template>
   <div>
-    <Header />
-    <SearchInfo search="Batman" :count="222" />
-    <Content/>
-    <Pagination :current-page="22" :total="222"/>
+    <Header :search-title="search" @search="handleSearch"/>
+    <SearchInfo :search="search" :count="total" :is-pending="isPending"/>
+    <Content :media-items="items" :is-pending="isPending"/>
+    <Pagination v-if="total > 10" :current-page="page" :total="total"/>
   </div>
 </template>
 

@@ -5,3 +5,11 @@ export interface MediaItem {
     Poster: string
     Type: 'movie' | 'series' | 'episode'
 }
+
+
+
+export interface MediaItemsResponse {
+    Response: 'string'
+    Search: MediaItem[]
+    totalResults: number
+}

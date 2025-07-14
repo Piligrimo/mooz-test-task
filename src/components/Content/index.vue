@@ -1,21 +1,28 @@
 <script setup lang="ts">
-  //defineProps<{ mediaItems: MediaItem[]}>()
   import Card from './Card.vue'
-  import placeholder from '../../assets/placeholder.svg'
+  import type { MediaItem } from '../../utils/types';
+  import Loading from './Loading.vue';
+  defineProps<{ mediaItems: MediaItem[] | null, isPending: boolean}>()
 </script>
 
 <template>
-  <main class="content">
-    <Card 
-      v-for="n in 8"
-      :key="n"
-      Title="Batman"
-      Year="1997" 
-      imdbID="aaaa" 
-      :Poster="placeholder"
-      Type="movie"
-    />
-  </main>
+  <div>
+    <Loading v-if="isPending" />
+    <main v-else-if="mediaItems && mediaItems.length" class="content">
+      <Card 
+        v-for="item in mediaItems"
+        :key="item.imdbID"
+        :Title="item.Title"
+        :Year="item.Year" 
+        :imdbID="item.imdbID" 
+        :Poster="item.Poster"
+        :Type="item.Type"
+      />    
+    </main>
+    <div v-else-if="mediaItems?.length === 0">
+      <h1>Nothing found</h1>
+    </div>
+  </div>
 </template>
 
 <style scoped>

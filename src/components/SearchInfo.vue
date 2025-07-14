@@ -1,15 +1,15 @@
 <script setup lang="ts">
 
-  defineProps<{ search: string, count: number}>()
+  defineProps<{ search: string, count: number, isPending: boolean}>()
 
 </script>
 
 <template>
   <section class="search-info">
-    <p v-if="!search" class="search-info__text">Use search field in header</p>
+    <p v-if="!search || !count" class="search-info__text">Use search field in header</p>
     <template v-else>
       <p class="search-info__text">You searched for: <u>{{ search }}</u></p>
-      <div class="search-info__badge">
+      <div v-if="!isPending" class="search-info__badge">
         {{ count }} results
       </div>
     </template>

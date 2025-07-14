@@ -1,13 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 
-  const search = ref('')
+  defineProps<{ searchTitle: string }>()
+
+  const emit = defineEmits<{
+    (e: 'search', value: string): void
+  }>()
+
+  const handleSearch =  (event: Event) => {
+    const target = event.target as HTMLInputElement
+     
+    emit('search', target.value)
+  }
 </script>
 
 <template>
   <header class="header">
     <img src="../assets/logo.svg" class="header__logo" alt="Mooz" />
-    <input  class="header__search" v-model="search" placeholder="Search"/>
+    <input class="header__search" placeholder="Search" :value="searchTitle" @input="handleSearch"/>
     <div class="header__user">
       <img src="../assets/avatar.svg" class="header__user-avatar" alt="user" />
       <span>Your name</span>
