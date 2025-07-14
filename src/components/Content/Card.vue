@@ -1,0 +1,40 @@
+<script setup lang="ts">
+  import { type MediaItem } from '../../utils/types.ts'
+  defineProps<MediaItem>()
+</script>
+
+<template>
+  <div class="card">
+    <img class="card__poster" :src="Poster"/>
+    <div class="card__info">
+      <p class="card__text">Name: {{Title}}</p>
+      <p class="card__text">Year: {{Year}}</p>
+      <p class="card__text">imdbID: {{imdbID}}</p>
+      <p class="card__text">Type: {{Type}}</p>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.card {
+  width: fit-content;
+}
+
+.card__info {
+  margin-top: 20px;
+  padding: 0 15px
+}
+
+.card__poster {
+  height: 270px;
+  width: 245px;
+  border-radius: 10px;
+  border: 1px solid #3256E3;
+  display: block;
+}
+
+.card__text {
+  font-size: 16px;
+  margin: 0;
+}
+</style>

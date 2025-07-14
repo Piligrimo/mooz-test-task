@@ -1,0 +1,38 @@
+<script setup lang="ts">
+
+  defineProps<{ search: string, count: number}>()
+
+</script>
+
+<template>
+  <section class="search-info">
+    <p v-if="!search" class="search-info__text">Use search field in header</p>
+    <template v-else>
+      <p class="search-info__text">You searched for: <u>{{ search }}</u></p>
+      <div class="search-info__badge">
+        {{ count }} results
+      </div>
+    </template>
+  </section>
+</template>
+
+<style scoped>
+.search-info {
+  margin-top: 45px;
+  display: flex;
+  gap: 17px;
+  align-items: center;
+}
+.search-info__text {
+  margin: 0;
+  font-size: 16px;
+}
+.search-info__badge {
+  height: 30px;
+  font-size: 14px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  color: #FCFCFF;
+  background-color: #3256E3;
+}
+</style>
