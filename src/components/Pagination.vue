@@ -141,7 +141,11 @@ import { computed } from 'vue';
 }
 
 .pagination__button._disabled{
-   cursor: default;
+  cursor: default;
+}
+
+.pagination__button._disabled:hover{
+  background-color: #FCFCFF;
 }
 .pagination__button._disabled .pagination__arrow{
   color: #929BBC;
