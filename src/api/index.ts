@@ -16,7 +16,7 @@ export const getMediaItems = async (search: string, page: number) : Promise<Medi
         return data as unknown as MediaItemsResponse
     } catch {
         return {
-            Error: 'Error Accured',
+            Error: 'An error occured',
             Search: [],
             totalResults: 0
         }
