@@ -43,4 +43,26 @@
   margin-top: 160px;
   text-align: center;
 }
+
+@media only screen and (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr 1fr;
+    width: 540px;
+    margin: auto;
+    margin-top: 60px;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  .content {
+    grid-template-columns: 1fr;
+    width: 245px;
+  }
+}
 </style>

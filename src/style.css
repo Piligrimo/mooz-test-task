@@ -53,19 +53,25 @@ button:focus-visible {
 }
 
 #app {
-  width: 100%;
-  padding: 50px 180px;
+  width: 1130px;
+  margin: 50px auto;  
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@media only screen and (max-width: 1024px) {
+  #app {
+    width: 835px;
   }
-  a:hover {
-    color: #747bff;
+}
+
+@media only screen and (max-width: 768px) {
+  #app {
+    width: 570px;
   }
-  button {
-    background-color: #f9f9f9;
+}
+@media only screen and (max-width: 570px) {
+  #app {
+    width: 100%;
+    padding: 20px;
+    margin-top: 0;
   }
 }
