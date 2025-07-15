@@ -121,6 +121,7 @@ import { computed } from 'vue';
   cursor: pointer;
 }
 
+.pagination__button:hover,
 .pagination__button._is-active {
   background-color: #F3F5F9;
 }
@@ -144,5 +145,12 @@ import { computed } from 'vue';
 }
 .pagination__button._disabled .pagination__arrow{
   color: #929BBC;
+}
+
+@media only screen and (max-width: 570px) {
+  .pagination__button {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
 }
 </style>
